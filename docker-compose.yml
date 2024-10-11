@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9090:8080"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_ADDR=redis:6379
+      - REDIS_DB=0
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+networks:
+  host_network:
+    external: true
+    name: host
